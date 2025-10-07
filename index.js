@@ -33,11 +33,9 @@
 //       ffmpegLocation: ffmpegPath,
 //     });
 
-
 //     const info = await youtubedl(url, { dumpSingleJson: true });
-//     const title = info.title.replace(/[\\/:*?"<>|]/g, ""); 
+//     const title = info.title.replace(/[\\/:*?"<>|]/g, "");
 //     const filePath = path.resolve(__dirname, `${title}.mp3`);
-
 
 //     await ctx.replyWithAudio({ source: filePath });
 //     fs.unlinkSync(filePath);
@@ -50,7 +48,6 @@
 // bot.launch();
 // console.log("✅ Bot işə düşdü!");
 
-
 const { Telegraf } = require("telegraf");
 const youtubedl = require("youtube-dl-exec");
 const fs = require("fs");
@@ -58,22 +55,28 @@ const path = require("path");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const ffmpegPath = process.env.FFMPEG_PATH;
-const ytDlpPath = process.env.YTDLP_PATH;
+
+const ytDlpPath =
+  process.env.YTDLP_PATH ||
+  path.resolve(
+    __dirname,
+    "bin",
+    process.platform === "win32" ? "yt-dlp.exe" : "yt-dlp"
+  );
 
 bot.start((ctx) =>
-  ctx.reply("Salam! 🎶 Mənə YouTube link göndər, sənin üçün mahnını mp3 şəklində yükləyim.")
+  ctx.reply(
+    "Salam! 🎶 Mənə YouTube link göndər, sənin üçün mahnını mp3 şəklində yükləyim."
+  )
 );
 
 bot.on("text", async (ctx) => {
   try {
     const url = ctx.message.text;
-
-    if (!url.startsWith("http")) {
+    if (!url.startsWith("http"))
       return ctx.reply("❌ Zəhmət olmasa keçərli YouTube link göndər.");
-    }
 
     ctx.reply("🎧 Mahnı yüklənir, bir az gözlə...");
-
     const outputTemplate = path.resolve(__dirname, "%(title)s.%(ext)s");
 
     await youtubedl(url, {
@@ -82,10 +85,12 @@ bot.on("text", async (ctx) => {
       audioQuality: 0,
       output: outputTemplate,
       ffmpegLocation: ffmpegPath,
-      youtubeDL: ytDlpPath,
+      youtubeDl: ytDlpPath,
     });
-
-    const info = await youtubedl(url, { dumpSingleJson: true, youtubeDL: ytDlpPath });
+    const info = await youtubedl(url, {
+      dumpSingleJson: true,
+      youtubeDl: ytDlpPath,
+    });
     const title = info.title.replace(/[\\/:*?"<>|]/g, "");
     const filePath = path.resolve(__dirname, `${title}.mp3`);
 
