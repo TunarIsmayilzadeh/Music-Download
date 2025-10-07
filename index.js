@@ -54,48 +54,47 @@ const fs = require("fs");
 const path = require("path");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-const ffmpegPath = process.env.FFMPEG_PATH;
-
-const ytDlpPath =
-  process.env.YTDLP_PATH ||
-  path.resolve(
-    __dirname,
-    "bin",
-    process.platform === "win32" ? "yt-dlp.exe" : "yt-dlp"
-  );
-
+const ffmpegPath = "/usr/bin/ffmpeg";
+const ytDlpPath = "/usr/local/bin/yt-dlp"; 
 bot.start((ctx) =>
-  ctx.reply(
-    "Salam! 🎶 Mənə YouTube link göndər, sənin üçün mahnını mp3 şəklində yükləyim."
-  )
+  ctx.reply("Salam! 🎶 Mənə YouTube link göndər, sənin üçün mahnını mp3 şəklində yükləyim.")
 );
 
 bot.on("text", async (ctx) => {
   try {
-    const url = ctx.message.text;
-    if (!url.startsWith("http"))
+    const url = ctx.message.text.trim();
+
+    if (!url.startsWith("http")) {
       return ctx.reply("❌ Zəhmət olmasa keçərli YouTube link göndər.");
+    }
 
     ctx.reply("🎧 Mahnı yüklənir, bir az gözlə...");
+
     const outputTemplate = path.resolve(__dirname, "%(title)s.%(ext)s");
 
+    
     await youtubedl(url, {
       extractAudio: true,
       audioFormat: "mp3",
       audioQuality: 0,
       output: outputTemplate,
       ffmpegLocation: ffmpegPath,
-      exec: ytDlpPath,
+      binaryPath: ytDlpPath, 
     });
 
+    
     const info = await youtubedl(url, {
       dumpSingleJson: true,
-      exec: ytDlpPath,
+      binaryPath: ytDlpPath,
     });
+
     const title = info.title.replace(/[\\/:*?"<>|]/g, "");
     const filePath = path.resolve(__dirname, `${title}.mp3`);
 
+    
     await ctx.replyWithAudio({ source: filePath });
+
+    
     fs.unlinkSync(filePath);
   } catch (error) {
     console.error("Xəta:", error);
