@@ -1,22 +1,30 @@
-# Node 18 əsaslı Linux imici
-FROM node:18-bullseye
+# 🔹 1. Daha yeni Node versiyası ilə başla (20.x)
+FROM node:20-bullseye
 
-# Lazımi alətləri quraşdıraq: ffmpeg və yt-dlp
-RUN apt-get update && \
-    apt-get install -y ffmpeg wget && \
+# 🔹 2. Lazımi sistem asılılıqları (ffmpeg, python, wget)
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    python3 \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# 🔹 3. yt-dlp faylını əllə yüklə (postinstall.js əvəzinə)
+RUN mkdir -p /usr/local/bin && \
     wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp && \
     chmod a+rx /usr/local/bin/yt-dlp
 
-# Layihə fayllarını konteynerə kopyala
+# 🔹 4. İş qovluğu
 WORKDIR /app
+
+# 🔹 5. Layihə fayllarını əlavə et
 COPY package*.json ./
-RUN npm install
+
+# 🔹 6. youtube-dl-exec-in postinstall skriptini atla
+RUN npm config set ignore-scripts true
+RUN npm install --force
+
+# 🔹 7. Qalan faylları əlavə et
 COPY . .
 
-# Ətraf mühit dəyişənlərini təyin et (Render burda öz mühit dəyişənlərini əlavə edəcək)
-ENV FFMPEG_PATH=/usr/bin/ffmpeg
-ENV YTDLP_PATH=/usr/local/bin/yt-dlp
-ENV NODE_ENV=production
-
-# Botu işə sal
+# 🔹 8. Default start komandası
 CMD ["node", "index.js"]
