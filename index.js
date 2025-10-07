@@ -3,9 +3,11 @@ const youtubedl = require("youtube-dl-exec");
 const fs = require("fs");
 const path = require("path");
 
-const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
+// const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
 
-const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
+// const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
+const bot = new Telegraf(process.env.BOT_TOKEN);
+const ffmpegPath = process.env.FFMPEG_PATH;
 
 bot.start((ctx) =>
   ctx.reply("Salam! 🎶 Mənə YouTube link göndər, sənin üçün mahnını mp3 şəklində yükləyim.")
