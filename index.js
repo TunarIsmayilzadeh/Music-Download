@@ -85,11 +85,12 @@ bot.on("text", async (ctx) => {
       audioQuality: 0,
       output: outputTemplate,
       ffmpegLocation: ffmpegPath,
-      youtubeDl: ytDlpPath,
+      exec: ytDlpPath,
     });
+
     const info = await youtubedl(url, {
       dumpSingleJson: true,
-      youtubeDl: ytDlpPath,
+      exec: ytDlpPath,
     });
     const title = info.title.replace(/[\\/:*?"<>|]/g, "");
     const filePath = path.resolve(__dirname, `${title}.mp3`);
