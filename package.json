@@ -4,8 +4,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node index.js",
-    "postinstall": "apt-get update && apt-get install -y ffmpeg python3-pip && pip3 install -U yt-dlp"
+    "start": "node index.js"
   },
   "dependencies": {
     "telegraf": "^4.16.3",
