@@ -1,0 +1,26 @@
+# Əsas Node.js imicini seçirik
+FROM node:18-slim
+
+# Serverin paket siyahısını yeniləyir və lazım olan paketləri quraşdırırıq (ffmpeg və yt-dlp)
+RUN apt-get update -y && \
+    apt-get install -y ffmpeg yt-dlp && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Tətbiqin yerləşəcəyi qovluq
+WORKDIR /app
+
+# Asılılıqları quraşdırmaq üçün package.json və package-lock.json fayllarını kopyalayırıq
+COPY package*.json ./
+
+# Node.js asılılıqlarını quraşdırırıq
+RUN npm install --production
+
+# Qalan bütün faylları (index.js daxil) kopyalayırıq
+COPY . .
+
+# Botumuzun dinləyəcəyi port (Əgər Webhook istifadə etsəydiniz, lazımdı. Polling üçün vacib deyil, amma konteyner üçün qeyd edək)
+EXPOSE 8080
+
+# Botu işə salmaq üçün əmr
+CMD [ "npm", "start" ]
