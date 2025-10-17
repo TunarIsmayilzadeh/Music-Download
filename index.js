@@ -45,5 +45,16 @@ bot.on("text", async (ctx) => {
   }
 });
 
-bot.launch();
-console.log("✅ Bot işə düşdü!");
+bot.launch()
+  .then(() => {
+    console.log("✅ Bot işə düşdü!");
+  })
+  .catch((err) => {
+    console.error("Bot başlatılırken Kritik Xəta:", err); 
+
+  });
+
+
+process.once("SIGINT", () => bot.stop("SIGINT"));
+process.once("SIGTERM", () => bot.stop("SIGTERM"));
+
