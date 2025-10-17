@@ -5,7 +5,7 @@ const path = require("path");
 
 const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
 
-const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
+// const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
 
 
 bot.start((ctx) =>
@@ -29,7 +29,7 @@ bot.on("text", async (ctx) => {
       audioFormat: "mp3",
       audioQuality: 0,
       output: outputTemplate,
-      ffmpegLocation: ffmpegPath,
+      // ffmpegLocation: ffmpegPath,
     });
 
     const info = await youtubedl(url, { dumpSingleJson: true });
