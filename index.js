@@ -3,14 +3,17 @@ const youtubedl = require("youtube-dl-exec");
 const fs = require("fs");
 const path = require("path");
 
-const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
-// const bot = new Telegraf(process.env.BOT_TOKEN);
+// const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// if (!process.env.BOT_TOKEN) {
-//     console.error("KRİTİK HƏRƏKƏT: BOT_TOKEN Ətraf Dəyişəni TAPILMADI!");
-// } else {
-//     console.log(`Token uzunluğu: ${process.env.BOT_TOKEN.length}`);
-// }
+// YENİ YOXLAMA KODU BURADADIR
+if (process.env.BOT_TOKEN && process.env.BOT_TOKEN.length > 5) {
+    // Əgər token tapılsa, onun uzunluğunu çap edirik
+    console.log(`Token uğurla oxundu. Uzunluq: ${process.env.BOT_TOKEN.length}`);
+} else {
+    // Əgər tapılmasa və ya çox qısadırsa
+    console.error("KRİTİK XƏTA: BOT_TOKEN ətraf dəyişəni tapılmadı və ya boşdur!");
+}
 
 // const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
 //telegram bot 
