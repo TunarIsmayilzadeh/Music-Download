@@ -22,5 +22,5 @@ COPY . .
 # Botumuzun dinləyəcəyi port (Əgər Webhook istifadə etsəydiniz, lazımdı. Polling üçün vacib deyil, amma konteyner üçün qeyd edək)
 EXPOSE 8080
 
-# Botu işə salmaq üçün əmr
+# bu kod Botu işə salmaq üçün əmrdir
 CMD [ "npm", "start" ]

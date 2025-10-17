@@ -7,7 +7,7 @@ const path = require("path");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
-
+//telegram bot 
 
 bot.start((ctx) =>
   ctx.reply("Salam! 🎶 Mənə YouTube link göndər, sənin üçün mahnını mp3 şəklində yükləyim.")
