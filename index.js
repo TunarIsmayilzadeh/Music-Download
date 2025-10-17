@@ -6,6 +6,12 @@ const path = require("path");
 // const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
+if (!process.env.BOT_TOKEN) {
+    console.error("KRİTİK HƏRƏKƏT: BOT_TOKEN Ətraf Dəyişəni TAPILMADI!");
+} else {
+    console.log(`Token uzunluğu: ${process.env.BOT_TOKEN.length}`);
+}
+
 // const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
 //telegram bot 
 
