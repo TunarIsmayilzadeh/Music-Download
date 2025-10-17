@@ -3,7 +3,8 @@ const youtubedl = require("youtube-dl-exec");
 const fs = require("fs");
 const path = require("path");
 
-const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
+// const bot = new Telegraf("8353240854:AAGrhzzxJEO8lfebDETqEszz-O5ysC3C0k0");
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // const ffmpegPath = "C:\\ffmpeg-8.0-essentials_build\\bin\\ffmpeg.exe";
 
